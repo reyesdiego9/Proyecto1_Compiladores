@@ -40,12 +40,13 @@ int main (){
     }
     
     token(14, reservada, "Palabra Reservada: ");
-    token(4, operadoBinario, "Binarios: ");
+    token(4, operadoBinario, "Operadores Binarios: ");
     token(6, operadorLogico, "Operadores Logicos: ");
 
 }
 
 void token(int num, string palabras[], string oracion){ 
+    int contador = 0
     for(size_t i = 0; i<v2.size(); i++) {
         const char *letra = v2[i].c_str();
         for(int j=0; j<num; j++){
@@ -55,5 +56,7 @@ void token(int num, string palabras[], string oracion){
                 cout<<oracion<<palabras[j]<<endl;
             }
         }
+        contador++;
     }
+    cout<<"Hay "<<contador<<" "<<oracion<<endl;
 }
