@@ -14,7 +14,7 @@ BracketDer := ‘]’
 OperdorBinario := ( ‘+’ | ’-‘ | ’*’ | ’/’ )
 OperadorLogico := ( ‘<’ | ‘>’ | ‘==’ | ’<=’ | ‘=>’ | ‘!=’ )
 [&&]
-Reservadas := [THEN=’THEN’, ELSE=’ELSE’, IF]
+Reservadas := [THEN=’THEN’, ELSE=’ELSE’, IF, SWITCH]
 ComI := [/*,(*]
 ComF := [*/,*)]
 ComL
