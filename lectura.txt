@@ -1,5 +1,5 @@
 [%%]
-Letra := [a-b,A-C]
+Letra := [a-b,A-C] 
 UnderLine := ‘_’
 Digito := [0-3]
 [%%]

@@ -9,7 +9,7 @@
 #include <iomanip>
 #include <string>
 #include <sstream>
-#include <windows.h>
+// #include <windows.h>
 #include <cstdio>
 
 using namespace std;
@@ -135,7 +135,7 @@ void identificador(string word1, string word2){
 
 
 int main(){
-	SetConsoleOutputCP(CP_UTF8);
+	// SetConsoleOutputCP(CP_UTF8);
     string Digito = "[0-9]";
     string Alfabeto = "[a-zA-Z]";
     string Entero = "\"0|\" + Digito + Digito + \"*\"";
@@ -204,21 +204,21 @@ int main(){
     for(size_t i = 0; i<general.size(); i++){
         separadoTxt(general[i], regEntero);
     }
-    // generadorArchivo(v3[2], v3[6], Entero, v[0]);
-    // std::cout<<"ESPECIFICACIONES GENERALES"<<std::endl;
-    // for (size_t i = 0; i < general.size(); i++){
-    //     cout<<general[i]<<endl;
-    // }
+    generadorArchivo(v3[2], v3[6], Entero, v[0]);
+    std::cout<<"ESPECIFICACIONES GENERALES"<<std::endl;
+    for (size_t i = 0; i < general.size(); i++){
+        cout<<general[i]<<endl;
+    }
 
-    // std::cout<<"ESPECIFICACION REGULARES"<<std::endl;
-    // for (size_t i = 0; i < regular.size(); i++){
-    //     cout<<regular[i]<<endl;
-    // }
+    std::cout<<"ESPECIFICACION REGULARES"<<std::endl;
+    for (size_t i = 0; i < regular.size(); i++){
+        cout<<regular[i]<<endl;
+    }
     
-    // std::cout<<"VALIDACION"<<std::endl;
-    // for (size_t i = 0; i < validacion.size(); i++){
-    //     cout<<validacion[i]<<endl;
-    // }
+    std::cout<<"VALIDACION"<<std::endl;
+    for (size_t i = 0; i < validacion.size(); i++){
+        cout<<validacion[i]<<endl;
+    }
     
     cout<<endl;
     for (size_t i = 0; i < v4.size(); i++){
