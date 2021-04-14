@@ -24,6 +24,7 @@ string palabra_transformada;
 vector <string> v;
 vector <string> v2;
 vector <string> v3;
+vector <string> v4;
 vector <string> general;
 vector <string> regular;
 vector <string> validacion;
@@ -68,8 +69,6 @@ void separadoTxt(string palabra, regex expresion){
     string palabraSinComa;
     string palabra_transformada;
     char chars[] = ",";
-    string bar = "‘";
-    size_t len = bar.length();
     while(regex_search(palabra, matches, expresion)){
         cout<<"is there a match: "<<matches.ready()<<endl;
         cout<<"are there not matches: "<<matches.empty()<<endl;
@@ -80,11 +79,15 @@ void separadoTxt(string palabra, regex expresion){
 
     }
     string::size_type pos = palabra_transformada.find("‘", 0);
+    string::size_type pos1 = palabra_transformada.find("’", 0);
     if (pos < string::npos)
-        palabra_transformada.replace(pos, string("‘").length(), "\"");
+    	palabra_transformada.replace(pos, string("‘").length(), "\"");
+        
+    if (pos1 < string::npos)
+    	palabra_transformada.replace(pos1, string("’").length(), "\"");
 
     palabra_transformada.erase(remove(palabra_transformada.begin(), palabra_transformada.end(), chars[0]), palabra_transformada.end());
-    v3.push_back(palabraSinComa);
+    v4.push_back(palabra_transformada);
 }
 
 
@@ -92,6 +95,7 @@ void Separador(string definicion){
     std::string s = definicion;
     std::string delimiter = ":= ";
     std::string palabra;
+    std::string palabra_transformada;
     double total = 0;
     size_t pos = 0;
     std::string token;
@@ -171,7 +175,6 @@ int main(){
                     getline(archivo, linea);
                 }
             }
-     
          v2.push_back(linea);
         }
     }
@@ -181,43 +184,45 @@ int main(){
     //         cout<<"hola";
     // }
     
-    for(int i = 0; i<general.size(); i++){   
-        separadoTxt(general[i], regEntero);
-        Separador(general[i]);
-    }
+    // for(int i = 0; i<general.size(); i++){   
+    //     separadoTxt(general[i], regEntero);
+    //     Separador(v3[i]);
+    // }
     
     map<string, string>::iterator i;
-    // for (i = expresion1.begin(); i != expresion1.end(); i++){
-    //     cout << setw(10) << i->first <<" = "<< setw(12) << i->second << endl;
-    // }
+     for (i = expresion1.begin(); i != expresion1.end(); i++){
+         cout << setw(10) << i->first <<" = "<< setw(12) << i->second << endl;
+     }
 
 
-    // for(auto &el1: expresion1){
-    //     cout<<el1.first<<" "<<el1.second<<endl;
-    //     identificador(el1.first, el1.second);
-    // }
+    for(auto &el1: expresion1){
+        cout<<el1.first<<" "<<el1.second<<endl;
+        identificador(el1.first, el1.second);
+    }
 
     // 
-    // separadoTxt(v2[1], regEntero);
+    for(size_t i = 0; i<general.size(); i++){
+        separadoTxt(general[i], regEntero);
+    }
     // generadorArchivo(v3[2], v3[6], Entero, v[0]);
-    std::cout<<"ESPECIFICACIONES GENERALES"<<std::endl;
-    for (size_t i = 0; i < general.size(); i++){
-        cout<<general[i]<<endl;
-    }
+    // std::cout<<"ESPECIFICACIONES GENERALES"<<std::endl;
+    // for (size_t i = 0; i < general.size(); i++){
+    //     cout<<general[i]<<endl;
+    // }
 
-    std::cout<<"ESPECIFICACION REGULARES"<<std::endl;
-    for (size_t i = 0; i < regular.size(); i++){
-        cout<<regular[i]<<endl;
-    }
+    // std::cout<<"ESPECIFICACION REGULARES"<<std::endl;
+    // for (size_t i = 0; i < regular.size(); i++){
+    //     cout<<regular[i]<<endl;
+    // }
     
-    std::cout<<"VALIDACION"<<std::endl;
-    for (size_t i = 0; i < validacion.size(); i++){
-        cout<<validacion[i]<<endl;
-    }
+    // std::cout<<"VALIDACION"<<std::endl;
+    // for (size_t i = 0; i < validacion.size(); i++){
+    //     cout<<validacion[i]<<endl;
+    // }
     
-    for (size_t i = 0; i < v3.size(); i++)
-    {
-        cout<<v3[i]<<endl;
+    cout<<endl;
+    for (size_t i = 0; i < v4.size(); i++){
+        cout<<v4[i]<<endl;
     }
     
 

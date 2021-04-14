@@ -6,8 +6,8 @@ archivo.cpp
 archivo.h
 generadorCodigo.exe
 hola.txt
-index
 index.cpp
+index.o
 index.out
 LeerLineaxliena.cpp
 LeerLineaxliena.exe
