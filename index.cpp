@@ -11,7 +11,7 @@ using namespace std;
 
 
 //Declarando Variables
-ifstream archivo;
+
 string miLinea;
 vector <string> v2;
 string reservada[17] = {"IF", "THEN", "ELSE","BEGIN", "END",
@@ -34,7 +34,6 @@ int main (){
             getline(archivo, linea);
             v2.push_back(linea);
         }
-
     }else{
         cout<<"El archivo no se encontrado"<<endl;
     }
@@ -42,11 +41,10 @@ int main (){
     token(14, reservada, "Palabra Reservada: ");
     token(4, operadoBinario, "Operadores Binarios: ");
     token(6, operadorLogico, "Operadores Logicos: ");
-
 }
 
 void token(int num, string palabras[], string oracion){ 
-    int contador = 0
+    int contador = 0;
     for(size_t i = 0; i<v2.size(); i++) {
         const char *letra = v2[i].c_str();
         for(int j=0; j<num; j++){
@@ -54,9 +52,9 @@ void token(int num, string palabras[], string oracion){
             const char *resultado = strstr(letra, busqueda);
             if(resultado){
                 cout<<oracion<<palabras[j]<<endl;
+                contador++;
             }
-        }
-        contador++;
+        } 
     }
     cout<<"Hay "<<contador<<" "<<oracion<<endl;
 }

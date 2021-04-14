@@ -1,7 +1,7 @@
 [%%]
-Letra := [a-z,A-Z]
+Letra := [a-b,A-C]
 UnderLine := ‘_’
-Digito := [0-9]
+Digito := [0-3]
 [%%]
 $Identificador := Letra ( Letra | Digito | UnderLine ) *
 NumeroEntero := Digito Digito *
@@ -17,5 +17,5 @@ OperadorLogico := ( ‘<’ | ‘>’ | ‘==’ | ’<=’ | ‘=>’ | ‘!=�
 Reservadas := [THEN=’THEN’, ELSE=’ELSE’, IF, SWITCH]
 ComI := [/*,(*]
 ComF := [*/,*)]
-ComL
+ComL := [--]
 [&&]
