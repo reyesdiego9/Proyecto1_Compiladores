@@ -1,8 +1,0 @@
-#include <reges>
- std::string OperadorLogico = espacio+"("+"[<]"+"|"+"[>]"+"|"+"[=][=]"+"|"+"[<][=]"+"|"+"[=][>]"+"|"+"[!][=]"+")";
- std::string OperdorBinario = espacio+"("+"[+]"+"|"+"[-]"+"|"+"[*]"+"|"+"[/]"+")";
- std::string NumeroFlotante = espacio+Numero+Punto+Numero;
- std::string Numero = espacio+Digito+Digito+"*";
- std::string $Identificador = espacio+Letra+"("+Letra+"|"+Digito+"|"+UnderLine+")"+"*";
- std::string ParentesisDer = espacio+"[)]";
- std::string ParentesisIzq = espacio+"[(]";
