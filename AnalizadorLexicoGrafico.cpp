@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdio.h>
 #include <cstdio>
 #include <iostream>
 #include <fstream>
@@ -13,16 +14,21 @@
 #include <string.h>
 #include <utility>
 #include <string>
+#include <regex>
+
+using namespace std;
 
 int contador = 0;
 std::vector<std::string> especificacion;
-std::string ubicacion = "C:\\Users\\jdrz2\\Desktop\\Universidad\\Analizador";
-//pila
+std::vector<std::string> texto;
+std::string ubicacion;
 struct NodoV{
 	std::string id;
 	std::vector <std::string> contenido;
 	NodoV *siguiente;
 };
+
+
 //Prototipos de funci�n
 void escribircodigo();
 void escribirPila( NodoV*& pila, std::ofstream &, bool);
@@ -31,14 +37,16 @@ void abrir_documento(std::string direccion);
 void gotoxy(int, int);
 void agregarpila(NodoV*& pila, std::string,std::vector <std::string>);
 void mostrarpila(NodoV *&);
+void reescribir(char array[]);
 void mostrar (std::vector <std::string> n);
 void escribirRegex(NodoV *& pila,std::ofstream &);
-
+void Color(int Background, int Text); 
 std::vector <std::string> separador(std::string);
 std::vector <std::string> anadirvector(std::string);
 std::string analisisgeneral(std::string);
 std::string tokenizar(std::string);
 std::string analisis(std::string);
+bool isoperator(std::string);
 bool isoperator(std::string);
 //pilas
 NodoV *general = NULL;
@@ -58,64 +66,102 @@ std::string reduce(const std::string& str, const std::string& fill = " ", const 
 auto result = trim(str, whitespace); 
 // replace sub ranges 
 auto beginSpace = result.find_first_of(whitespace); 
-while (beginSpace != std::string::npos) { 
+while (beginSpace != std::string::npos) {
 	const auto endSpace = result.find_first_not_of(whitespace, beginSpace); 
 	const auto range = endSpace - beginSpace; result.replace(beginSpace, range, fill); 
 	const auto newStart = beginSpace + fill.length(); beginSpace = result.find_first_of(whitespace, newStart); 
-} 
+}
 return result; 
 }
 //Men� principal
 int main (){
 SetConsoleOutputCP(CP_UTF8);
 std::string direccion;
+std::ifstream archivo1, archivo;
+std::string linea;
 system("cls");
-gotoxy(20,4);std::cout<<"CREACION DE LIBRERIA PARA ANALIZADOR LEXICO: ";
+Color(0,9);gotoxy(5,1);std::cout<<"UMG VILLA NUEVA, INGENIERIA EN SISTEMAS";
+Color(0,9);	gotoxy(5,2);std::cout<<"DESARROLLADO POR:";Color(0,14); std::cout<<" JORDI AUGUSTO GONZALEZ QUINTAL CARNET: 5090-18-5206";
+Color(0,14);	gotoxy(5,3);std::cout<<"                  JUAN DIEGO REYEZ ZEPEDA        CARNET: 5090-18-5233";
+Color(0,9);	gotoxy(45,7);std::cout<<"GENERADOR DE ANALIZADOR LEXICOG";
+	gotoxy(2,10);std::cout<<"DIRECCION DE SU DOCUMENTO TXT: ";
+	Color(0,11);
 getline(std::cin, direccion);
 abrir_documento(direccion);
-std::cout<<"PILA REGULAR"<<std::endl;
-mostrarpila(regular);
-std::cout<<"PILA GENERAL"<<std::endl;
+system("cls");
+Color(0,10);
+std::cout<<"TRANSFORMACION DE EXPRESIONES GENERALES"<<std::endl;
 mostrarpila(general);
+Color(0,11);
+std::cout<<"TRANSFORMACION DE EXPRESIONES REGULARES"<<std::endl;
+mostrarpila(regular);
+Color(0,12);
+std::cout<<"TRANSFORMACION VALIDACIONES"<<std::endl;
+mostrarpila(validaciones);
+system("pause");
 escribircodigo();
+Color(0,2);
+std::cout<<"LIBRERIA GENERADA CON EXITO..."<<std::endl;
+Color(0,14);
 return 0;
 }
+void reescribir(char array[]){
+    SetConsoleOutputCP(CP_UTF8);
+    std::ofstream rees;
+    rees.open(array, std::ios::in);
+    for(size_t i = 0; i < texto.size(); i++){
+        rees<<texto[i]<<std::endl;
+    }
+    rees.close();
+}
+
 //apertura del documento
 void abrir_documento(std::string dir){
-	std:: string bracket;
-	std::ifstream archivo1, archivo;
-	char /*direccion[dir.length()]*/ text;
+	system("cls");
+	std::string bracket;
+	std::ifstream archivo1, archivo, rees;
+	char direccion[dir.length()] , text;
+	std::string linea;
 	int numero, MAX=10000;
-	//strcpy(direccion, dir.c_str());
-	archivo.open(ubicacion+"\\lectura.txt", std::ios::in);
+	char chars[] = ",";
+	strcpy(direccion, dir.c_str());
+	std::string s(direccion);
+	ubicacion = regex_replace(s, regex(".txt"), ".h");
+	archivo.open(direccion, std::ios::in);
+	rees.open(direccion, std::ios::in);
 	if(archivo.fail()){
 		std::cout<<"No se pudo abrir el archivo";
 		exit(1);
-	}
-	
+	}  
+	Color(0,15);gotoxy(45,2);std::cout<<"LECTURA DEL ARCHIVO"<<std::endl;
+    while(!rees.eof()) {
+        getline(rees, linea);
+        std::cout<<linea<<std::endl;
+        linea = regex_replace(linea, regex("‘"), "'");
+        linea = regex_replace(linea, regex("’"), "'");
+        texto.push_back(linea);
+    }
+    Color(0,15);std::cout<<" LECTURA REALIZADA CON EXITO"<<std::endl;
+    system("pause");
+	reescribir(direccion);
 	//caracter raro -30
 	while(!archivo.eof()){	
 		getline(archivo, bracket);
-		std::cout<<bracket<<std::endl;
 		//ESPECIFICACIONES GENERALES
 		if(reduce(bracket)=="[%%]"){
-			std::cout<<"ESPECIFICACIONES GENERALES"<<std::endl;
 			getline(archivo,bracket);
 			do{
 			std::vector <std::string> guardado;
 			std::vector <std::string> info;
 			guardado = separador(bracket);
-			//guardar en pila
 			std::string auxiliar=analisisgeneral(guardado.at(1));
 			info.push_back(auxiliar);
 			agregarpila(general, guardado.at(0), info);
-			std::cout<<"--ID:"<<guardado.at(0)<<"--CONTENIDO:"<<info.at(0)<<std::endl;
     		getline(archivo, bracket);
 			}while (reduce(bracket)!="[%%]");
 		}
 		//EXPRECIONES REGULARES
 		if(reduce(bracket)=="[%%]"){
-			std::cout<<"ESPECIFICACIONES REGULARES"<<std::endl;
 			getline(archivo,bracket);
 			do{
 			std::string contenido;
@@ -123,16 +169,15 @@ void abrir_documento(std::string dir){
 			std::vector <std::string> info;
 			guardado = separador(bracket);
 			//guardar en pila
+			
 			contenido = tokenizar(analisis(guardado.at(1)));
 			info = anadirvector(contenido);
 			agregarpila(regular, guardado.at(0), info);
-			std::cout<<"--ID:"<<guardado.at(0)<<"--CONTENIDO:"<<contenido<<std::endl;
     		getline(archivo, bracket);
 			}while (bracket!="[&&]");
 		}
 		//VALIDACIONES
 		if(bracket=="[&&]"){
-			std::cout<<"VALIDACIONES"<<std::endl;
 			getline(archivo, bracket);
 			bool aux_salida = true;
 			while(aux_salida){
@@ -158,10 +203,7 @@ void abrir_documento(std::string dir){
 					}
 				}
 				aux_name[entrada] = 0;
-				std::cout<<"         NOMBRE DE LA ESPECIFICACION       "<<std::endl;
-				std::cout<<"-------->"<<aux_name<<"<-------"<<std::endl;
 				//Variable contenido tiene la memoria de que parte del vector he analizado
-				std::cout<<"---------------CONTENIDO--------------------"<<std::endl;
 				while (aux[contenido]==32) contenido++;
 				std::string validar_nombre = aux_name;
 				if(validar_nombre=="Reservadas"){
@@ -196,7 +238,6 @@ void abrir_documento(std::string dir){
 									copiador++;
 								}
 							palabra[copiador]=0;
-							std::cout<<palabra<<"<- Palabra reservada de ->"<<id<<std::endl;
 							}
 							palabras.push_back(palabra);
 						contenido++;
@@ -225,7 +266,6 @@ void abrir_documento(std::string dir){
 								contador++;
 							}
 							comentario[contador]=0;
-							std::cout<<validar_nombre<<": "<<comentario<<std::endl;
 							comentarios.push_back(comentario);
 							if(aux[contenido]==']') break;
 							contenido++;
@@ -274,8 +314,9 @@ void mostrarpila(NodoV *& p){
 	aux=p;
 	while(aux!=NULL){
 	std::cout<<" ";
-	std::cout<<"std::string "<<aux->id<<" = ";
-	mostrar(aux->contenido);
+	Color(0,9);std::cout<<"std::string "<<aux->id;
+	Color(0,6);std::cout<<" = ";
+	Color(0,14);mostrar(aux->contenido);
 	aux=aux->siguiente;
 	}
 }
@@ -466,9 +507,8 @@ void escribircodigo(){
 	std::string linea1 = "\tstd::string aux;\n"
     "\tstd::fstream file;\n"
     "\tstd::string word, t, q, filename;\n";
-
 	std::ofstream archivo;
-	archivo.open(ubicacion+"\\libreria.h");
+	archivo.open(ubicacion);
 	archivo.clear();
 	//Lllamando librerias
 	archivo<<"#include <regex>\n"
@@ -498,8 +538,9 @@ void escribircodigo(){
 	escribirPila(validaciones, archivo, false);
 
 	//Creacion de variables regex
-	escribirRegex(regular, archivo);
+	escribirRegex(general, archivo);
 	escribirRegex(validaciones, archivo);
+	escribirRegex(regular, archivo);
 
 	//While
 
@@ -512,7 +553,7 @@ void escribircodigo(){
 			archivo<<"\t\tif(match"<<i<<")\n"
 			"\t\t\tstd::cout<<aux<<\" es "<<especificacion[i]<<"\"<<std::endl;"<<std::endl;
 		}else{
-			archivo<<"\t\tif(match"<<i<<")\n"
+			archivo<<"\t\telse if(match"<<i<<")\n"
 			"\t\t\tstd::cout<<aux<<\" es "<<especificacion[i]<<"\"<<std::endl;"<<std::endl;
 		}
 	}
@@ -573,4 +614,15 @@ void guardar(std::ofstream & archivo, std::vector <std::string> n, bool validaci
 	}
 	}
 	return;
+}
+ //color de la letra
+ void Color(int Background, int Text){ // Funci�n para cambiar el color del fondo y/o pantalla
+
+ HANDLE Console = GetStdHandle(STD_OUTPUT_HANDLE); // Tomamos la consola.
+
+ // Para cambiar el color, se utilizan n�meros desde el 0 hasta el 255.
+ // Pero, para convertir los colores a un valor adecuado, se realiza el siguiente c�lculo.
+ int    New_Color= Text + (Background * 16);
+
+ SetConsoleTextAttribute(Console, New_Color); // Guardamos los cambios en la Consola.
 }

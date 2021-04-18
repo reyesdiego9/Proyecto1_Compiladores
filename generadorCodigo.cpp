@@ -94,16 +94,17 @@ string separadoTxt(string palabra, regex expresion){
     string::size_type pos = palabra_transformada.find("‘", 0);
     string::size_type pos1 = palabra_transformada.find("’", 0);
 
+
+    while (palabra_transformada.find("‘") != string::npos)
+        palabra_transformada.replace(palabra_transformada.find("‘"), 1, "\'");	
+    
+    while (palabra_transformada.find("’") != string::npos)
+        palabra_transformada.replace(palabra_transformada.find("’"), 1, "\'");
+
     // if (pos < string::npos){
     //     palabra_transformada.replace(pos, string("‘").length(), "\"");
     // }
-
-    while (palabra_transformada.find("‘") != string::npos)
-        palabra_transformada.replace(palabra_transformada.find("‘"), 1, "\"");	
     
-    while (palabra_transformada.find("’") != string::npos)
-        palabra_transformada.replace(palabra_transformada.find("’"), 1, "\"");
-
     // if (pos1 < string::npos)
     // 	palabra_transformada.replace(pos1, string("’").length(), "\"");
 
