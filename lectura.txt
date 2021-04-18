@@ -1,20 +1,24 @@
-[%%]
-Letra := [a-b,A-C] 
-UnderLine := ‘_’
-Digito := [0-3]
-[%%]
+[%%]		
+Letra := [a-z,A-Z]
+UnderLine := '_'
+Digito := [0-9]
+BracketIzq := '['
+BracketDer := ']'
+Punto := '.'
+[%%] 
+ParentesisIzq := '('
+ParentesisDer := ')'
 $Identificador := Letra ( Letra | Digito | UnderLine ) *
-NumeroEntero := Digito Digito *
-Punto := ‘.’
+Numero := Digito Digito *
 NumeroFlotante := Numero Punto Numero
-ParentesisIzq := ‘(‘
-ParentesisDer := ‘)’
-BracketIzq := ‘[‘
-BracketDer := ‘]’
-OperdorBinario := ( ‘+’ | ’-‘ | ’*’ | ’/’ )
-OperadorLogico := ( ‘<’ | ‘>’ | ‘==’ | ’<=’ | ‘=>’ | ‘!=’ )
+OperdorBinario := ( '+' | '-' | '*' | '/' )
+OperadorLogico := ( '<' | '>' | '==' | '<=' | '=>' | '!=' )
 [&&]
-Reservadas := [THEN=’THEN’, ELSE=’ELSE’, IF, SWITCH]
+Reservadas :=[IF='IF', THEN='THEN', ELSE='ELSE', BEGIN='BEGIN', END='END',
+    FOR='FOR', REPEAT='REPEAT', WHILE='WHILE', VARIABLE='VARIABLE',
+    CONST='CONST', PROGRAM='PROGRAM', INCLUDE='INCLUDE',
+    UNTIL='UNTIL', FOREACH='FOREACH', SPLIT='SPLIT', CASE='CASE',
+    SWITCH='SWITCH']
 ComI := [/*,(*]
 ComF := [*/,*)]
 ComL := [--]

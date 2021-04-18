@@ -1,0 +1,14 @@
+ std::string OperadorLogico = #include <regex>
+espacio+"("+"[<]"+"|"+"[>]"+"|"+"[=][=]"+"|"+"[<][=]"+"|"+"[=][>]"+"|"+"[!][=]"+")";
+ std::string OperdorBinario = #include <regex>
+espacio+"("+"[+]"+"|"+"[-]"+"|"+"[*]"+"|"+"[/]"+")";
+ std::string NumeroFlotante = #include <regex>
+espacio+Numero+Punto+Numero;
+ std::string Numero = #include <regex>
+espacio+Digito+Digito+"*";
+ std::string $Identificador = #include <regex>
+espacio+Letra+"("+Letra+"|"+Digito+"|"+UnderLine+")"+"*";
+ std::string ParentesisDer = #include <regex>
+espacio+"[)]";
+ std::string ParentesisIzq = #include <regex>
+espacio+"[(]";
