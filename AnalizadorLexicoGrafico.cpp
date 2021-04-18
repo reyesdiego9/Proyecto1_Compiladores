@@ -29,6 +29,7 @@ struct NodoV{
 };
 
 
+
 //Prototipos de funci�n
 void escribircodigo();
 void escribirPila( NodoV*& pila, std::ofstream &, bool);
